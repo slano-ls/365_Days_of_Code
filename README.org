@@ -1,0 +1,9 @@
+#+title: 365 Days of Code
+
+In an attempt to grow some consistency in my programming habits and to learn new tools and information I have began a new undertaking; *365 Days of Code*.
+
+I've seen many different projects that aim for a month of coding, or a couple of months; but as I am aiming to gain more consistency in my life as well as programming I have set an ambitious goal of 365 days. For all who are interested in participating; feel free to do something similar at your own level; so we can all grow together. As more of a personal project, I will be tackling problems in *C* as a method of learning some low-level programming and getting a better understaning of some of the fundamentals of programming. I have not decided on a specific topic of problems I will be tackling this year; but will be starting off with some simpler projects and then progressing as we go on.
+
+I hope everyone enjoys taking a look at these projects, as I will enjoy doing them...
+
+Wish me luck, and all the best to the rest of you.
