@@ -19,8 +19,8 @@
 #define BUFFER_SIZE 2048
 #define SEC_VAL 365
 #define ENCRYPTION_EQ(av) (SEC_VAL * 4 + 8 - 13 * 2 - 100)
-void encryption_func();
-int main(int argc, char *argv[]) {
+#define MAX_FILE_LENGTH 2048
+int main(int argc, char* argv[]) {
     char buffer[BUFFER_SIZE];
     FILE *file = NULL;
 
@@ -41,26 +41,23 @@ int main(int argc, char *argv[]) {
             }
         fputs(buffer, file);
     }
+    int c;
+    int* encrypt_values = (int*)malloc(sizeof(int));
+    int list_size = 0;
 
-    fclose(file);
-
-    char c;
-    int ascii_value, encrypt_value;
-    int list[BUFFER_SIZE];
-    int i=0;
-
-    file = fopen("text.txt", "r");
-    if (file == NULL){
-        perror("Couldn't open file");
-        exit(EXIT_FAILURE);
+    while((c = fgetc(file))!= EOF){
+       encrypt_values = (int*)realloc(encrypt_values, sizeof(int)*(list_size+1));
+       encrypt_values[list_size]=c;
+       list_size++;
     }
-    while((c = fgetc(file)) != EOF){
-        ascii_value = (int)c;
-        encrypt_value = ENCRYPTION_EQ(ascii_value);
-        list[i] = encrypt_value;
-        printf("The value of %c is %d \n", c, list[i]);
-        i++;
+
+    printf("The ascii values of the file are: ");
+    for (int i=0; i < BUFFER_SIZE ; i++){
+        printf("%d ", encrypt_values[i]);
     }
+    printf("\n");
+
+    free(encrypt_values);
     fclose(file);
 
     return 0;
