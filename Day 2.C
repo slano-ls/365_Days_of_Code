@@ -9,6 +9,9 @@
 //                                                             $$\   $$ |
 //                                                             \$$$$$$  |
 //                                                              \______/
+// Author : Saihaj Law
+// Date : January 1st
+// Project : NCurses Based Text Editor
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
