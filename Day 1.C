@@ -11,7 +11,7 @@
 //                                                              \______/
 // Author : Saihaj Law
 // Date : JAN 1st, 2023
-// Project :
+// Project : Terminal Based Text Editor
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
