@@ -12,27 +12,35 @@
 //                                                              \______/
 // Author : Saihaj Law
 // Date : January 5th
-// Project : Unix GREP simplified version
+// Project : TOP Simplified Version
 #include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
-#include <string.h>
+#include <sys/sysctl.h>
+#include <libproc.h>
+#include <Security/Authorization.h>
 
-int main(int argc, char *argv[]) {
-    FILE *file = fopen(argv[1], "r");
-    if (file == NULL) {
-        perror("Error opening file");
-        return 1;
+int main() {
+  while (1) {
+    // Use "ps" to list the current processes
+    char *arguments[] = {"ps", "-ax", NULL};
+    FILE *output = NULL;
+    OSStatus status = AuthorizationExecuteWithPrivileges(
+      NULL, "/bin/ps", kAuthorizationFlagDefaults, arguments, &output);
+    if (status != errAuthorizationSuccess) {
+      fprintf(stderr, "AuthorizationExecuteWithPrivileges failed: %d\n", status);
+      exit(1);
     }
 
+    // Read the output of the "ps" command
     char line[1024];
-
-    while (fgets(line, 1024, file)) {
-        if (strstr(line, argv[2])) {
-            printf("%s", line);
-        }
+    while (fgets(line, sizeof(line), output)) {
+      printf("%s", line);
     }
 
-    fclose(file);
+    // Sleep for 5 seconds before updating the list
+    sleep(5);
+  }
 
-    return 0;
+  return 0;
 }
