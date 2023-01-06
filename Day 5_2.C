@@ -1,3 +1,4 @@
+
 //      $$$$$$\   $$$$$$\  $$$$$$$\      $$$$$$$\                                               $$$$$$\       $$$$$$\                  $$\
 //     $$ ___$$\ $$  __$$\ $$  ____|     $$  __$$\                                             $$  __$$\     $$  __$$\                 $$ |
 //     \_/   $$ |$$ /  \__|$$ |          $$ |  $$ | $$$$$$\  $$\   $$\  $$$$$$$\      $$$$$$\  $$ /  \__|    $$ /  \__| $$$$$$\   $$$$$$$ | $$$$$$\
@@ -11,35 +12,27 @@
 //                                                              \______/
 // Author : Saihaj Law
 // Date : January 6th
-// Project : Unix CAT simplified version
-
+// Project : Unix GREP simplified version
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define BUFFER_SIZE 1024
 
-int main(int argc, char** argv) {
-  if (argc > 1) {
-    for (int i = 1; i < argc; i++) {
-      FILE* input_file = fopen(argv[i], "r");
-      if (!input_file) {
+int main(int argc, char *argv[]) {
+    FILE *file = fopen(argv[1], "r");
+    if (file == NULL) {
         perror("Error opening file");
         return 1;
-      }
-
-      char buffer[BUFFER_SIZE];
-      while (fread(buffer, 1, BUFFER_SIZE, input_file) > 0) {
-        fwrite(buffer, 1, BUFFER_SIZE, stdout);
-      }
-
-      fclose(input_file);
     }
-  } else {
-    char buffer[BUFFER_SIZE];
-    while (fread(buffer, 1, BUFFER_SIZE, stdin) > 0) {
-      fwrite(buffer, 1, BUFFER_SIZE, stdout);
-    }
-  }
 
-  return 0;
+    char line[1024];
+
+    while (fgets(line, 1024, file)) {
+        if (strstr(line, argv[2])) {
+            printf("%s", line);
+        }
+    }
+
+    fclose(file);
+
+    return 0;
 }
