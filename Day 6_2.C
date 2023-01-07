@@ -87,3 +87,5 @@ int main(int argc, char **argv) {
   }
   return 0;
 }
+
+// Notes: Usable currently, just for fun add a little ncurses integration to make it more graphically interesting
