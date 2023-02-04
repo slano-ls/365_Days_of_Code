@@ -1,41 +1,30 @@
-#include "Day 9.h"
-
 #include <ncurses.h>
 #include <stdlib.h>
 #include <string.h>
 
 int main(int argc, char *argv[]) {
-    initscr();
-    cbreak();
-    noecho();
-
-    int choice;
-
-    while (1) {
-        clear();
-        mvprintw(0, 0, "Select an option:\n");
-        mvprintw(1, 0, "1. Open Terminal\n");
-        mvprintw(2, 0, "2. Close Terminal\n");
-        mvprintw(3, 0, "3. Quit\n");
-        refresh();
-
-        choice = getch();
-        switch (choice) {
-            case '1':
-                system("open -a Terminal");
-                break;
-            case '2':
-                system("kill $(ps -ef | grep Terminal | grep -v grep | awk '{print $2}')");
-                break;
-            case '3':
-                endwin();
-                exit(0);
-                break;
-            default:
-                break;
-        }
+    if (argc < 3) {
+        printf("Usage: manager [open|close] [app name]\n");
+        return 1;
     }
 
-    endwin();
+    char *command;
+    if (strcmp(argv[1], "open") == 0) {
+        command = malloc(strlen("open -a ") + strlen(argv[2]) + 1);
+        strcpy(command, "open -a ");
+        strcat(command, argv[2]);
+    } else if (strcmp(argv[1], "close") == 0) {
+        command = malloc(strlen("kill $(ps -ef | grep ") + strlen(argv[2]) + strlen(" | grep -v grep | awk '{print $2}')") + 1);
+        strcpy(command, "kill $(ps -ef | grep ");
+        strcat(command, argv[2]);
+        strcat(command, " | grep -v grep | awk '{print $2}')");
+    } else {
+        printf("Usage: manager [open|close] [app name]\n");
+        return 1;
+    }
+
+    system(command);
+    free(command);
+
     return 0;
 }
